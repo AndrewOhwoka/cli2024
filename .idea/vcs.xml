@@ -3,5 +3,6 @@
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
     <mapping directory="$PROJECT_DIR$/cli2024" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/mid-sprint-2024-travelapi-s4" vcs="Git" />
   </component>
 </project>

@@ -5,8 +5,10 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import com.keyin.domian.Author;
-import com.keyin.domian.Book;
+import com.keyin.domian.Aircraft;
+import com.keyin.domian.Airport;
+import com.keyin.domian.City;
+import com.keyin.domian.Passenger;
 
 import java.io.IOException;
 import java.net.URI;
@@ -28,14 +30,14 @@ public class RESTClient {
     }
     public HttpClient getClient() {
         if (client == null) {
-            client  = HttpClient.newHttpClient();
+            client = HttpClient.newHttpClient();
         }
         return client;
     }
 
     private HttpResponse<String> httpSender(HttpRequest request) throws IOException, InterruptedException {
         HttpResponse<String> response = getClient().send(request, HttpResponse.BodyHandlers.ofString());
-        if (response.statusCode()==200) {
+        if (response.statusCode() == 200) {
             System.out.println("*****Response Body Print****");
             System.out.println("***** " + response.body());
         } else {
@@ -44,47 +46,59 @@ public class RESTClient {
         return response;
     }
 
-    public List<Author> buildAirportListFromResponse(String response) throws JsonProcessingException {
-        List<Author> authors = new ArrayList<Author>();
+    public List<Aircraft> buildAircraftListFromResponse(String response) throws JsonProcessingException {
+        List<Aircraft> aircrafts = new ArrayList<>();
         ObjectMapper mapper = new ObjectMapper();
         mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
-        authors = mapper.readValue(response, new TypeReference<List<Author>>(){});
-        return authors;
+        aircrafts = mapper.readValue(response, new TypeReference<List<Aircraft>>() {});
+        return aircrafts;
     }
 
-    public List<Book> buildBookListForAuthorFromResponse(String response) throws JsonProcessingException {
-        List<Book> books = new ArrayList<Book>();
+    public List<Airport> buildAirportListFromResponse(String response) throws JsonProcessingException {
+        List<Airport> airports = new ArrayList<>();
         ObjectMapper mapper = new ObjectMapper();
         mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
-        books = mapper.readValue(response, new TypeReference<List<Book>>(){});
-        return books;
+        airports = mapper.readValue(response, new TypeReference<List<Airport>>() {});
+        return airports;
     }
 
-    public List<Author> getAllAuthors() {
-        List<Author> authors = new ArrayList<Author>();
+    public List<City> buildCityListFromResponse(String response) throws JsonProcessingException {
+        List<City> cities = new ArrayList<>();
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+        cities = mapper.readValue(response, new TypeReference<List<City>>() {});
+        return cities;
+    }
+
+    public List<Passenger> buildPassengerListFromResponse(String response) throws JsonProcessingException {
+        List<Passenger> passengers = new ArrayList<>();
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
+        passengers = mapper.readValue(response, new TypeReference<List<Passenger>>() {});
+        return passengers;
+    }
+
+    public List<Aircraft> getAllAircrafts() {
+        List<Aircraft> aircrafts = new ArrayList<>();
         HttpRequest request = HttpRequest.newBuilder().uri(URI.create(serverURL)).build();
         try {
             HttpResponse<String> response = httpSender(request);
-            authors = buildAirportListFromResponse(response.body());
+            aircrafts = buildAircraftListFromResponse(response.body());
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
-        return authors;
+        return aircrafts;
     }
 
-
-    public List<Book> getBooksForAuthor() {
-        List<Book> books = new ArrayList<Book>();
+    public List<Airport> getAirportsForCity() {
+        List<Airport> airports = new ArrayList<>();
         HttpRequest request = HttpRequest.newBuilder().uri(URI.create(serverURL)).build();
         try {
             HttpResponse<String> response = httpSender(request);
-
-            books = buildBookListForAuthorFromResponse(response.body());
+            airports = buildAirportListFromResponse(response.body());
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
-        return books;
+        return airports;
     }
-
-
 }

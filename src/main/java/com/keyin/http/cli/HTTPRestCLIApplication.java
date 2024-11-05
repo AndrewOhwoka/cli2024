@@ -1,8 +1,9 @@
 package com.keyin.http.cli;
 
-
-import com.keyin.domian.Author;
-import com.keyin.domian.Book;
+import com.keyin.domian.Aircraft;
+import com.keyin.domian.Airport;
+import com.keyin.domian.City;
+import com.keyin.domian.Passenger;
 import com.keyin.http.client.RESTClient;
 
 import java.util.List;
@@ -23,17 +24,17 @@ public class HTTPRestCLIApplication {
         this.restClient = restClient;
     }
 
-    public String generateAuthorReport() {
-        List<Author> authors = getRestClient().getAllAuthors();
+    public String generateAircraftReport() {
+        List<Aircraft> aircrafts = getRestClient().getAllAircrafts();
 
         StringBuilder report = new StringBuilder();
 
-        for (Author author : authors) {
-            report.append(author.getAuthorName());
+        for (Aircraft aircraft : aircrafts) {
+            report.append(aircraft.getType());
             report.append(" - ");
-            report.append(author.getAuthorId());
+            report.append(aircraft.getAirlineName());
 
-            if (authors.indexOf(author) != (authors.size() - 1)) {
+            if (aircrafts.indexOf(aircraft) != (aircrafts.size() - 1)) {
                 report.append(",");
             }
         }
@@ -43,17 +44,17 @@ public class HTTPRestCLIApplication {
         return report.toString();
     }
 
-    public String generateListOfBooksForSpecificAuthor() {
-        List<Book> books = getRestClient().getBooksForAuthor();
+    public String generateListOfAirportsForSpecificCity() {
+        List<Airport> airports = getRestClient().getAirportsForCity();
 
         StringBuffer report = new StringBuffer();
 
-        for (Book book : books) {
-            report.append(book.getTitle());
+        for (Airport airport : airports) {
+            report.append(airport.getName());
             report.append(" - ");
-            report.append(book.getPublisher());
+            report.append(airport.getCode());
 
-            if (books.indexOf(book) != (books.size() - 1)) {
+            if (airports.indexOf(airport) != (airports.size() - 1)) {
                 report.append(",");
             }
         }
@@ -62,10 +63,6 @@ public class HTTPRestCLIApplication {
 
         return report.toString();
     }
-
-
-
-
 
     public static void main(String[] args) {
         for (String arg : args) {
@@ -75,8 +72,6 @@ public class HTTPRestCLIApplication {
         HTTPRestCLIApplication cliApp = new HTTPRestCLIApplication();
 
         String serverURL = args[0];
-        //String serverURL = "http://localhost:8080/getBooksForAuthor?authorName=Jordan";
-
 
         if (serverURL != null && !serverURL.isEmpty()) {
 
@@ -85,15 +80,13 @@ public class HTTPRestCLIApplication {
 
             cliApp.setRestClient(restClient);
 
-            if (serverURL.contains("greeting")) {
-
-            } else if (serverURL.contains("getBooksForAuthor")) {
-
-                cliApp.generateListOfBooksForSpecificAuthor();
+            if (serverURL.contains("getAircrafts")) {
+                cliApp.generateAircraftReport();
+            } else if (serverURL.contains("getAirportsForCity")) {
+                cliApp.generateListOfAirportsForSpecificCity();
             } else {
-                cliApp.generateAuthorReport();
+                System.out.println("Invalid URL");
             }
         }
-
     }
 }
