@@ -80,7 +80,7 @@ public class RESTClient {
 
     public List<Aircraft> getAllAircrafts() {
         List<Aircraft> aircrafts = new ArrayList<>();
-        HttpRequest request = HttpRequest.newBuilder().uri(URI.create(serverURL + "/aircrafts")).build();
+        HttpRequest request = HttpRequest.newBuilder().uri(URI.create(serverURL)).build();
         try {
             HttpResponse<String> response = httpSender(request);
             aircrafts = buildAircraftListFromResponse(response.body());
@@ -92,7 +92,7 @@ public class RESTClient {
 
     public List<Airport> getAirportsForCity() {
         List<Airport> airports = new ArrayList<>();
-        HttpRequest request = HttpRequest.newBuilder().uri(URI.create(serverURL + "/airports")).build();
+        HttpRequest request = HttpRequest.newBuilder().uri(URI.create(serverURL)).build();
         try {
             HttpResponse<String> response = httpSender(request);
             airports = buildAirportListFromResponse(response.body());
@@ -104,7 +104,7 @@ public class RESTClient {
 
     public List<City> getAllCities() {
         List<City> cities = new ArrayList<>();
-        HttpRequest request = HttpRequest.newBuilder().uri(URI.create(serverURL + "/cities")).build();
+        HttpRequest request = HttpRequest.newBuilder().uri(URI.create(serverURL )).build();
         try {
             HttpResponse<String> response = httpSender(request);
             cities = buildCityListFromResponse(response.body());
@@ -116,7 +116,7 @@ public class RESTClient {
 
     public List<Passenger> getAllPassengers() {
         List<Passenger> passengers = new ArrayList<>();
-        HttpRequest request = HttpRequest.newBuilder().uri(URI.create(serverURL + "/passengers")).build();
+        HttpRequest request = HttpRequest.newBuilder().uri(URI.create(serverURL)).build();
         try {
             HttpResponse<String> response = httpSender(request);
             passengers = buildPassengerListFromResponse(response.body());

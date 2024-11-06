@@ -1,5 +1,4 @@
 package com.keyin;
-
 import com.keyin.domian.Aircraft;
 import com.keyin.domian.Airport;
 import com.keyin.domian.City;
