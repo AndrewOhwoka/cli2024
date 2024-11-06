@@ -64,6 +64,48 @@ public class HTTPRestCLIApplication {
         return report.toString();
     }
 
+    public String generateCityReport() {
+        List<City> cities = getRestClient().getAllCities();
+
+        StringBuilder report = new StringBuilder();
+
+        for (City city : cities) {
+            report.append(city.getName());
+            report.append(" - ");
+            report.append(city.getState());
+
+            if (cities.indexOf(city) != (cities.size() - 1)) {
+                report.append(",");
+            }
+        }
+
+        System.out.println(report.toString());
+
+        return report.toString();
+    }
+
+    public String generatePassengerReport() {
+        List<Passenger> passengers = getRestClient().getAllPassengers();
+
+        StringBuilder report = new StringBuilder();
+
+        for (Passenger passenger : passengers) {
+            report.append(passenger.getFirstName());
+            report.append(" ");
+            report.append(passenger.getLastName());
+            report.append(" - ");
+            report.append(passenger.getPhoneNumber());
+
+            if (passengers.indexOf(passenger) != (passengers.size() - 1)) {
+                report.append(",");
+            }
+        }
+
+        System.out.println(report.toString());
+
+        return report.toString();
+    }
+
     public static void main(String[] args) {
         for (String arg : args) {
             System.out.println(arg);
@@ -84,6 +126,10 @@ public class HTTPRestCLIApplication {
                 cliApp.generateAircraftReport();
             } else if (serverURL.contains("getAirportsForCity")) {
                 cliApp.generateListOfAirportsForSpecificCity();
+            } else if (serverURL.contains("getCities")) {
+                cliApp.generateCityReport();
+            } else if (serverURL.contains("getPassengers")) {
+                cliApp.generatePassengerReport();
             } else {
                 System.out.println("Invalid URL");
             }

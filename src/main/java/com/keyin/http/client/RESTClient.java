@@ -80,7 +80,7 @@ public class RESTClient {
 
     public List<Aircraft> getAllAircrafts() {
         List<Aircraft> aircrafts = new ArrayList<>();
-        HttpRequest request = HttpRequest.newBuilder().uri(URI.create(serverURL)).build();
+        HttpRequest request = HttpRequest.newBuilder().uri(URI.create(serverURL + "/aircrafts")).build();
         try {
             HttpResponse<String> response = httpSender(request);
             aircrafts = buildAircraftListFromResponse(response.body());
@@ -92,7 +92,7 @@ public class RESTClient {
 
     public List<Airport> getAirportsForCity() {
         List<Airport> airports = new ArrayList<>();
-        HttpRequest request = HttpRequest.newBuilder().uri(URI.create(serverURL)).build();
+        HttpRequest request = HttpRequest.newBuilder().uri(URI.create(serverURL + "/airports")).build();
         try {
             HttpResponse<String> response = httpSender(request);
             airports = buildAirportListFromResponse(response.body());
@@ -100,5 +100,29 @@ public class RESTClient {
             e.printStackTrace();
         }
         return airports;
+    }
+
+    public List<City> getAllCities() {
+        List<City> cities = new ArrayList<>();
+        HttpRequest request = HttpRequest.newBuilder().uri(URI.create(serverURL + "/cities")).build();
+        try {
+            HttpResponse<String> response = httpSender(request);
+            cities = buildCityListFromResponse(response.body());
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+        return cities;
+    }
+
+    public List<Passenger> getAllPassengers() {
+        List<Passenger> passengers = new ArrayList<>();
+        HttpRequest request = HttpRequest.newBuilder().uri(URI.create(serverURL + "/passengers")).build();
+        try {
+            HttpResponse<String> response = httpSender(request);
+            passengers = buildPassengerListFromResponse(response.body());
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+        }
+        return passengers;
     }
 }
