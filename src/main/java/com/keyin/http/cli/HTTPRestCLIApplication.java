@@ -122,13 +122,13 @@ public class HTTPRestCLIApplication {
 
             cliApp.setRestClient(restClient);
 
-            if (serverURL.contains("getAircrafts")) {
+            if (serverURL.contains("aircraft")) {
                 cliApp.generateAircraftReport();
-            } else if (serverURL.contains("getAirportsForCity")) {
+            } else if (serverURL.contains("airports")) {
                 cliApp.generateListOfAirportsForSpecificCity();
-            } else if (serverURL.contains("getCities")) {
+            } else if (serverURL.contains("cities")) {
                 cliApp.generateCityReport();
-            } else if (serverURL.contains("getPassengers")) {
+            } else if (serverURL.contains("passengers")) {
                 cliApp.generatePassengerReport();
             } else {
                 System.out.println("Invalid URL");
